@@ -10,13 +10,13 @@ public class LiftView {
 	private FixedSizePanel entryPane,shaftPane;
 	private FloorExit exitPane;
 	private Basket basket;
-	private Timer repaintTimer;
 	private static int FLOOR_HEIGHT = 100;
 	private static int ENTRY_WIDTH = 300;
 	private static int EXIT_WIDTH = 200;
 	private static int SHAFT_WIDTH = 150;
 	private static int NO_OF_FLOORS = 7;
 	private static int MAX_LOAD = 4;
+	private static int SPEED = 10;
 	private FloorEntry[] floorIn;
 
 	public LiftView() {
@@ -46,12 +46,6 @@ public class LiftView {
 		basket = new Basket(SHAFT_WIDTH,NO_OF_FLOORS,FLOOR_HEIGHT,shaftPane);
 		view.pack();
 		view.setVisible(true);
-		repaintTimer = new Timer(20, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				view.repaint();
-			}
-		});
-		repaintTimer.start();
 	}
 
 	public void drawLift(int floor, int load) {
@@ -92,16 +86,16 @@ public class LiftView {
 	}
 
 
-	public static void main(String[] args) {
-		LiftView lv = new LiftView();
-		lv.drawLift(0,3);
-		lv.drawLevel(5,4);
-		try {
-			Thread.sleep(1000);
-		} catch(InterruptedException e) { }
-		lv.moveLift(0,1);
-		lv.drawLift(1,2);
-	}
+//	public static void main(String[] args) {
+//		LiftView lv = new LiftView();
+//		lv.drawLift(0,3);
+//		lv.drawLevel(5,4);
+//		try {
+//			Thread.sleep(1000);
+//		} catch(InterruptedException e) { }
+//		lv.moveLift(0,1);
+//		lv.drawLift(1,2);
+//	}
 
 	private class FixedSizePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
@@ -224,14 +218,14 @@ public class LiftView {
 				for(int y=start;y<stop;y+=INCREMENT) {
 					setLocation(2,y);
 					try {
-						Thread.sleep(50);
+						Thread.sleep(SPEED);
 					} catch(InterruptedException e) { }
 				}
 			} else {
 				for(int y=start;y>stop;y-=INCREMENT) {
 					setLocation(2,y);
 					try {
-						Thread.sleep(50);
+						Thread.sleep(SPEED);
 					} catch(InterruptedException e) { }
 				}
 			}
